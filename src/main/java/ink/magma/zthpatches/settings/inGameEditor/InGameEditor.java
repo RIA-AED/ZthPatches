@@ -4,11 +4,9 @@ import ink.magma.zthpatches.ZthPatches;
 import ink.magma.zthpatches.settings.GlobalSettings;
 import ink.magma.zthpatches.settings.GlobalSettingsController;
 import org.bukkit.command.CommandSender;
-import revxrsal.commands.annotation.AutoComplete;
-import revxrsal.commands.annotation.Command;
-import revxrsal.commands.annotation.Named;
-import revxrsal.commands.annotation.Optional;
+import revxrsal.commands.annotation.*;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
+import revxrsal.commands.bukkit.annotation.CommandPermission;
 
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
@@ -58,6 +56,8 @@ public class InGameEditor {
     }
 
     @Command("zth-patches-setting")
+    @CommandPermission("zth-patches.setting")
+    @Description("可以实现游戏内对 ZthPatches 设置的更改。")
     @AutoComplete("@inGameGlobalSettingKey @inGameGlobalSettingValue")
     public void getSettingValue(CommandSender sender,
                                 @Named("配置项") String settingKey,
