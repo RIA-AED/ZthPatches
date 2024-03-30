@@ -31,11 +31,7 @@ public class GlobalUtils {
      */
     public static boolean checkBeforeTime(Date date) {
         Date current = new Date();
-        if (current.before(date)) {
-            return true;
-        } else {
-            return false;
-        }
+        return current.before(date);
     }
 
     public static GlobalSettings getGlobalSettings() {
