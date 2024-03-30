@@ -1,0 +1,6 @@
+name: ZthPatches
+version: '${version}'
+main: ink.magma.zthpatches.ZthPatches
+api-version: '1.18'
+authors: [MagmaBlock]
+description: Zth 补丁合集
