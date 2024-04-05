@@ -2,7 +2,6 @@ package ink.magma.zthpatches;
 
 import ink.magma.zthpatches.bukkit.ZthPatches;
 import ink.magma.zthpatches.bungee.ZthPatchesBungee;
-import net.md_5.bungee.api.plugin.Plugin;
 import revxrsal.commands.CommandHandler;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
 import revxrsal.commands.bungee.BungeeCommandHandler;
@@ -13,7 +12,7 @@ public class PlatformHandler {
             return BukkitCommandHandler.create(ZthPatches.getInstance());
         }
         if (getPlatformType().equals(PlatformType.Bungee)) {
-            BungeeCommandHandler.create((Plugin) ZthPatchesBungee.getInstance());
+            BungeeCommandHandler.create(ZthPatchesBungee.getInstance());
         }
         return null;
     }

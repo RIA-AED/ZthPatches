@@ -4,3 +4,5 @@ main: ink.magma.zthpatches.bukkit.ZthPatches
 api-version: '1.18'
 authors: [MagmaBlock]
 description: Zth 补丁合集
+softdepend:
+  - HuskHomes
