@@ -1,0 +1,5 @@
+name: ZthPatchesBungee
+main: ink.magma.zthpatches.bungee.ZthPatchesBungee
+version: '${version}'
+author: MagmaBlock
+description: Zth 补丁合集

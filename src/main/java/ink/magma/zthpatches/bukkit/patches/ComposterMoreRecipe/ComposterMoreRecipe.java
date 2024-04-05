@@ -1,7 +1,7 @@
-package ink.magma.zthpatches.patches.ComposterMoreRecipe;
+package ink.magma.zthpatches.bukkit.patches.ComposterMoreRecipe;
 
-import ink.magma.zthpatches.ZthPatches;
-import ink.magma.zthpatches.patches.PatchAddon;
+import ink.magma.zthpatches.bukkit.ZthPatches;
+import ink.magma.zthpatches.bukkit.patches.PatchAddon;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;

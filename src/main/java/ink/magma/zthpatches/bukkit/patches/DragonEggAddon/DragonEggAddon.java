@@ -1,7 +1,7 @@
-package ink.magma.zthpatches.patches.DragonEggAddon;
+package ink.magma.zthpatches.bukkit.patches.DragonEggAddon;
 
-import ink.magma.zthpatches.ZthPatches;
-import ink.magma.zthpatches.patches.PatchAddon;
+import ink.magma.zthpatches.bukkit.ZthPatches;
+import ink.magma.zthpatches.bukkit.patches.PatchAddon;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -1,4 +1,4 @@
-package ink.magma.zthpatches.settings;
+package ink.magma.zthpatches.bukkit.settings;
 
 import net.william278.annotaml.YamlComment;
 import net.william278.annotaml.YamlFile;
@@ -17,24 +17,41 @@ import java.util.Map;
  */
 
 @YamlFile(header = """
+        ZthPatches
+                
         这是 Zth 全新的补丁系统配置文件，迁移服务器前，请留意调整此配置文件。
-        本配置的许多选项也可以在游戏内直接更改。""")
+        本配置的许多选项也可以在游戏内直接更改。
+        """)
 public class GlobalSettings {
+    @YamlComment("""
+            == 全局配置项 ==
+            全局配置项是插件运行所必须的配置项。
+                        
+            必须配置此项! serverId 应当与群组中此服务器的 Id 相同，且大小写敏感。
+            """)
     @Nullable
-    @YamlComment("必须配置此项! serverId 应当与群组中此服务器的 Id 相同，且大小写敏感。")
     public String serverId = null;
-
+    @YamlComment("redis 配置。用于存储全局的一些变量状态。")
     public Map<String, String> redisConfig = Map.of(
             "host", "direct.kemijoki.sakura-realm.studio",
             "port", "26720"
     );
 
-    @YamlComment("龙蛋落入虚空警报")
+    @YamlComment("""
+            == Bukkit 侧配置项 ==
+            仅在 Bukkit 服务端上生效。非 Bukkit 本节内容无用。
+            """)
     public Boolean dragonEggFallVoidAlert = true;
-    @YamlComment("末地龙蛋拾取提示")
     public Boolean dragonEggEndWorldPickUpMessage = true;
-
     public Boolean composterMoreRecipe = true;
+    public String lobbyNewPlayerSpawnWarpName = "lobby-new-player";
+
+
+//    @YamlComment("""
+//            == Bungee 侧配置项 ==
+//            仅在 Bungee 服务端上生效。非 Bungee 本节内容无用。
+//            """)
+
 
     public GlobalSettings() {
     }

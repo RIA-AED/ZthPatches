@@ -1,15 +1,18 @@
-package ink.magma.zthpatches.settings.inGameEditor;
+package ink.magma.zthpatches.command.InGameEditor;
 
-import ink.magma.zthpatches.ZthPatches;
-import ink.magma.zthpatches.settings.GlobalSettings;
-import ink.magma.zthpatches.settings.GlobalSettingsController;
+import ink.magma.zthpatches.bukkit.ZthPatches;
+import ink.magma.zthpatches.bukkit.settings.GlobalSettingInitializer;
+import ink.magma.zthpatches.bukkit.settings.GlobalSettings;
+import ink.magma.zthpatches.bukkit.settings.GlobalSettingsController;
 import org.bukkit.command.CommandSender;
+import revxrsal.commands.CommandHandler;
 import revxrsal.commands.annotation.*;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
 
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,24 +25,24 @@ import java.util.Set;
  */
 public class InGameEditor {
 
-    public static void registerCommand() {
-        BukkitCommandHandler handler = ZthPatches.getInstance().handler;
-
+    public void registerAutoCompleter(CommandHandler handler) {
         // 自动补全相关
         // 设置键的补全
-        handler.getAutoCompleter().registerSuggestion("inGameGlobalSettingKey", (args, sender, command) -> GlobalSettingsController.getModifiableFieldNames());
+        handler.getAutoCompleter().registerSuggestion("inGameGlobalSettingKey", (args, sender, command) -> {
+            return GlobalSettingsController.getModifiableFieldNames(getSettings().getClass());
+        });
         // 设置值的补全
         handler.getAutoCompleter().registerSuggestion("inGameGlobalSettingValue", (args, sender, command) -> {
             try {
                 // 获取用户正在输入的设置的键名
                 String settingKey = args.get(1);
-                Field field = GlobalSettingsController.getModifiableField(settingKey);
+                Field field = getSettings().getClass().getField(settingKey);
                 // 根据此配置项的类，获取可能的补全
-                Set<String> fieldSuggestions = new java.util.HashSet<>(GlobalSettingsController.getFieldSuggestions(field.getType()));
+                Set<String> fieldSuggestions = new HashSet<>(GlobalSettingsController.getFieldSuggestions(field.getType()));
 
                 // 同时也将配置项现在已经设置的值加到自动补全中，方便修改
                 try {
-                    fieldSuggestions.add(GlobalSettingsController.getFieldValueString(settingKey));
+                    fieldSuggestions.add(GlobalSettingsController.getFieldValueString(getSettings().getClass(), settingKey));
                 } catch (Throwable ignore) {
                     // 如果无法获取当前值就算了
                 }
@@ -50,9 +53,6 @@ public class InGameEditor {
             }
             return List.of();
         });
-        // 注册指令
-        handler.register(new InGameEditor());
-        handler.registerBrigadier();
     }
 
     @Command("zth-patches-setting")
@@ -65,7 +65,7 @@ public class InGameEditor {
         // Get
         if (settingValue == null) {
             try {
-                String fieldValueString = GlobalSettingsController.getFieldValueString(settingKey);
+                String fieldValueString = GlobalSettingsController.getFieldValueString(getSettings().getClass(), settingKey);
                 sender.sendMessage(MessageFormat.format(
                         "配置项 {0} 的值为 {1}",
                         settingKey, fieldValueString
@@ -82,8 +82,8 @@ public class InGameEditor {
         // Set
         else {
             try {
-                GlobalSettingsController.setModifiableFieldsByString(ZthPatches.getGlobalSettings(), settingKey, settingValue);
-                ZthPatches.getInstance().saveConfig();
+                GlobalSettingsController.setModifiableFieldsByString(getSettings(), settingKey, settingValue);
+                saveConfig();
                 sender.sendMessage(MessageFormat.format(
                         "配置项 {0} 已修改为 {1}",
                         settingKey, settingValue
@@ -112,5 +112,17 @@ public class InGameEditor {
                 sender.sendMessage("已更改此配置，但无法保存新的配置文件到硬盘。本次的配置在重启后可能失效！");
             }
         }
+    }
+
+    private BukkitCommandHandler getCommandHandler() {
+        return ZthPatches.getInstance().handler;
+    }
+
+    private GlobalSettings getSettings() {
+        return ZthPatches.getGlobalSettings();
+    }
+
+    private void saveConfig() {
+        GlobalSettingInitializer.saveConfig();
     }
 }

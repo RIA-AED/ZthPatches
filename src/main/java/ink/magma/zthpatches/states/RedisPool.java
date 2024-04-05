@@ -1,6 +1,6 @@
 package ink.magma.zthpatches.states;
 
-import ink.magma.zthpatches.ZthPatches;
+import ink.magma.zthpatches.bukkit.ZthPatches;
 
 import java.util.Map;
 

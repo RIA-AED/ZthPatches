@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'ink.magma'
-version = '1.0.2'
+version = '1.2.0'
 
 repositories {
     maven { url 'https://maven.aliyun.com/repository/central' }
@@ -17,6 +17,7 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url = 'https://jitpack.io' }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url = "https://repo.william278.net/releases" }
@@ -24,14 +25,18 @@ repositories {
 
 dependencies {
     compileOnly "org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT"
+    compileOnly 'net.md-5:bungeecord-api:1.19-R0.1-SNAPSHOT'
 
     implementation "com.github.Revxrsal.Lamp:common:3.2.0"
     implementation "com.github.Revxrsal.Lamp:bukkit:3.2.0"
+    implementation "com.github.Revxrsal.Lamp:bungee:3.2.0"
     implementation "net.kyori:adventure-api:4.16.0"
     implementation "net.kyori:adventure-text-minimessage:4.16.0"
     implementation "net.kyori:adventure-platform-bukkit:4.3.2"
     implementation "net.william278:annotaml:2.0.7"
     implementation "redis.clients:jedis:5.1.2"
+
+    compileOnly 'net.william278.huskhomes:huskhomes-bukkit:4.6.2'
 }
 
 
@@ -62,6 +67,9 @@ processResources {
     inputs.properties props
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
+        expand props
+    }
+    filesMatching('bungee.yml') {
         expand props
     }
 }

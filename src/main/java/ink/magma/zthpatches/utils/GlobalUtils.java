@@ -1,7 +1,7 @@
 package ink.magma.zthpatches.utils;
 
-import ink.magma.zthpatches.ZthPatches;
-import ink.magma.zthpatches.settings.GlobalSettings;
+import ink.magma.zthpatches.bukkit.ZthPatches;
+import ink.magma.zthpatches.bukkit.settings.GlobalSettings;
 
 import java.util.Date;
 

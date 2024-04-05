@@ -1,8 +1,8 @@
-package ink.magma.zthpatches.settings;
+package ink.magma.zthpatches.bukkit.settings;
 
-import ink.magma.zthpatches.ZthPatches;
+import ink.magma.zthpatches.bukkit.ZthPatches;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashSet;
@@ -12,11 +12,11 @@ public class GlobalSettingsController {
     /**
      * 获取所有可写字段
      */
-    public static Set<Field> getModifiableFields() {
+    public static Set<Field> getModifiableFields(Class<?> type) {
         HashSet<Field> writableFieldNames = new HashSet<>();
 
         // 所有字段
-        Field[] fields = GlobalSettings.class.getFields();
+        Field[] fields = type.getFields();
         for (Field field : fields) {
             // 如果此字段是公开可写
             if (Modifier.isPublic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())) {
@@ -28,19 +28,12 @@ public class GlobalSettingsController {
     }
 
     /**
-     * 获取可写字段
+     * 获取所有可写字段的名称 Set，用于自动补全
      */
-    public static Field getModifiableField(String fieldName) throws NoSuchFieldException {
-        return GlobalSettings.class.getField(fieldName);
-    }
-
-    /**
-     * 获取所有可写字段名
-     */
-    public static Set<String> getModifiableFieldNames() {
+    public static Set<String> getModifiableFieldNames(Class<?> type) {
         var result = new HashSet<String>();
 
-        for (Field field : getModifiableFields()) {
+        for (Field field : getModifiableFields(type)) {
             result.add(field.getName());
         }
 
@@ -52,15 +45,14 @@ public class GlobalSettingsController {
      *
      * @return Object.toString() 后的结果
      */
-    public static @Nullable String getFieldValueString(String fieldName) throws NoSuchFieldException, IllegalAccessException {
+    public static @NotNull String getFieldValueString(Class<?> type, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         try {
-            Field field = getModifiableField(fieldName);
+            Field field = type.getField(fieldName);
             Object object = field.get(ZthPatches.getGlobalSettings());
             return object.toString();
         } catch (NullPointerException e) {
-            return null;
+            return "null";
         }
-
     }
 
     /**
@@ -80,18 +72,6 @@ public class GlobalSettingsController {
         } else {
             return Set.of();
         }
-    }
-
-    /**
-     * 写入可写字段
-     *
-     * @param instance  全局配置实例
-     * @param fieldName 字段名称
-     * @param value     要写入的对象
-     */
-    public static void setModifiableFields(GlobalSettings instance, String fieldName, Object value) throws NoSuchFieldException, IllegalAccessException {
-        Field field = GlobalSettings.class.getField(fieldName);
-        field.set(instance, value);
     }
 
     /**

@@ -1,4 +1,4 @@
-package ink.magma.zthpatches.patches;
+package ink.magma.zthpatches.bukkit.patches;
 
 public abstract class PatchAddon {
     private boolean isEnabled = false;

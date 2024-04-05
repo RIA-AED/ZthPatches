@@ -1,7 +1,7 @@
-package ink.magma.zthpatches.patches.RiaSetFreezeCommand;
+package ink.magma.zthpatches.bukkit.patches.RiaSetFreezeCommand;
 
-import ink.magma.zthpatches.ZthPatches;
-import ink.magma.zthpatches.patches.PatchAddon;
+import ink.magma.zthpatches.bukkit.ZthPatches;
+import ink.magma.zthpatches.bukkit.patches.PatchAddon;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import revxrsal.commands.annotation.Command;

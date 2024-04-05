@@ -1,6 +1,6 @@
-package ink.magma.zthpatches.command;
+package ink.magma.zthpatches.command.Main;
 
-import ink.magma.zthpatches.ZthPatches;
+import ink.magma.zthpatches.bukkit.settings.GlobalSettingInitializer;
 import org.bukkit.command.CommandSender;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Subcommand;
@@ -9,10 +9,7 @@ import revxrsal.commands.annotation.Subcommand;
 public class MainCommand {
     @Subcommand("reload-config")
     public void reloadConfig(CommandSender sender) {
-        ZthPatches instance = ZthPatches.getInstance();
-        instance.createConfig();
+        GlobalSettingInitializer.createConfig();
         sender.sendMessage("已重载配置文件。");
     }
-
-
 }
