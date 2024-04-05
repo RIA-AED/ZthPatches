@@ -13,10 +13,10 @@ public class ZthPatchesBungee extends Plugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         PlatformHandler.setPlatformType(PlatformHandler.PlatformType.Bungee);
 
         GlobalSettingInitializer.createConfig();
-        instance = this;
 
         handler = BungeeCommandHandler.create(this);
         // 主指令

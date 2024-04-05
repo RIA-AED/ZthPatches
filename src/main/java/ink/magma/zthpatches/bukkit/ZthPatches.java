@@ -19,10 +19,10 @@ public final class ZthPatches extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+        instance = this;
         PlatformHandler.setPlatformType(PlatformHandler.PlatformType.Bukkit);
 
         GlobalSettingInitializer.createConfig();
-        instance = this;
 
         handler = BukkitCommandHandler.create(this);
         // 主指令

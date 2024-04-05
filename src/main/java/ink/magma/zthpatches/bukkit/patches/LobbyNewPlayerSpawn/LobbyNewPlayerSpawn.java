@@ -11,9 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -34,15 +36,19 @@ public class LobbyNewPlayerSpawn extends PatchAddon implements Listener {
     public boolean newPlayerHandle(Player player) {
         CompletableFuture<Optional<Warp>> getWarp;
         if (!player.hasPermission("zth.rules.agreed")) {
+            ZthPatches.getInstance().getLogger().info("2");
             getWarp = huskHomesAPI.getWarp(GlobalUtils.getGlobalSettings().lobbyNewPlayerSpawnWarpName);
 
             // 进行相应目标的传送
             getWarp.thenAccept((result) -> {
+                ZthPatches.getInstance().getLogger().info("3");
                 result.ifPresent(warp -> {
+                    ZthPatches.getInstance().getLogger().info("4");
                     OnlineUser onlineUser = huskHomesAPI.adaptUser(player);
                     huskHomesAPI.teleportBuilder(onlineUser)
                             .target(result.get())
-                            .buildAndComplete(false);
+                            .toTimedTeleport()
+                            .execute();
                 });
             });
 
@@ -54,7 +60,12 @@ public class LobbyNewPlayerSpawn extends PatchAddon implements Listener {
 
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerLoginEvent event) {
+        newPlayerHandle(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerSpawn(PlayerSpawnLocationEvent event) {
         newPlayerHandle(event.getPlayer());
     }
 
@@ -66,7 +77,7 @@ public class LobbyNewPlayerSpawn extends PatchAddon implements Listener {
     @EventHandler
     public void onPlayerSpawnCommand(PlayerCommandPreprocessEvent event) {
         // 忽略非 /spawn
-        if (!event.getMessage().trim().equalsIgnoreCase("/spawn")) return;
+        if (!List.of("/spawn", "/cmi spawn").contains(event.getMessage())) return;
         boolean handed = newPlayerHandle(event.getPlayer());
         if (handed) event.setCancelled(true);
     }
