@@ -36,14 +36,11 @@ public class LobbyNewPlayerSpawn extends PatchAddon implements Listener {
     public boolean newPlayerHandle(Player player) {
         CompletableFuture<Optional<Warp>> getWarp;
         if (!player.hasPermission("zth.rules.agreed")) {
-            ZthPatches.getInstance().getLogger().info("2");
             getWarp = huskHomesAPI.getWarp(GlobalUtils.getGlobalSettings().lobbyNewPlayerSpawnWarpName);
 
             // 进行相应目标的传送
             getWarp.thenAccept((result) -> {
-                ZthPatches.getInstance().getLogger().info("3");
                 result.ifPresent(warp -> {
-                    ZthPatches.getInstance().getLogger().info("4");
                     OnlineUser onlineUser = huskHomesAPI.adaptUser(player);
                     huskHomesAPI.teleportBuilder(onlineUser)
                             .target(result.get())
