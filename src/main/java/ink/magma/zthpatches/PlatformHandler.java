@@ -1,22 +1,7 @@
 package ink.magma.zthpatches;
 
-import ink.magma.zthpatches.bukkit.ZthPatches;
-import ink.magma.zthpatches.bungee.ZthPatchesBungee;
-import revxrsal.commands.CommandHandler;
-import revxrsal.commands.bukkit.BukkitCommandHandler;
-import revxrsal.commands.bungee.BungeeCommandHandler;
-
+// 请注意，此类中不能含有来自各个平台的类的 import，否则会导致类不存在错误而无法启动
 public class PlatformHandler {
-    public static CommandHandler getPlatformCommandHandler() {
-        if (getPlatformType().equals(PlatformType.Bukkit)) {
-            return BukkitCommandHandler.create(ZthPatches.getInstance());
-        }
-        if (getPlatformType().equals(PlatformType.Bungee)) {
-            BungeeCommandHandler.create(ZthPatchesBungee.getInstance());
-        }
-        return null;
-    }
-
     private static PlatformType platformType;
 
     public static PlatformType getPlatformType() {
