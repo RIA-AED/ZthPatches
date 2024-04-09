@@ -1,7 +1,7 @@
 package ink.magma.zthpatches.bukkit.patches.RiaSetFreezeCommand;
 
-import ink.magma.zthpatches.bukkit.ZthPatches;
-import ink.magma.zthpatches.bukkit.patches.PatchAddon;
+import ink.magma.zthpatches.bukkit.ZthPatchesBukkit;
+import ink.magma.zthpatches.PatchAddon;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import revxrsal.commands.annotation.Command;
@@ -27,12 +27,12 @@ public class RiaSetFreezeCommand extends PatchAddon {
 
     @Override
     public void onEnable() {
-        ZthPatches.getInstance().handler.register(new RiaSetFreezeCommand());
-        ZthPatches.getInstance().handler.registerBrigadier();
+        ZthPatchesBukkit.getInstance().handler.register(new RiaSetFreezeCommand());
+        ZthPatchesBukkit.getInstance().handler.registerBrigadier();
     }
 
     @Override
     public void onDisable() {
-        ZthPatches.getInstance().handler.unregister("ria setfreeze");
+        ZthPatchesBukkit.getInstance().handler.unregister("ria setfreeze");
     }
 }

@@ -1,6 +1,5 @@
-package ink.magma.zthpatches.bukkit.settings;
+package ink.magma.zthpatches.states.settings;
 
-import ink.magma.zthpatches.bukkit.ZthPatches;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -48,7 +47,7 @@ public class GlobalSettingsController {
     public static @NotNull String getFieldValueString(Class<?> type, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         try {
             Field field = type.getField(fieldName);
-            Object object = field.get(ZthPatches.getGlobalSettings());
+            Object object = field.get(GlobalSettingInitializer.getGlobalSettings());
             return object.toString();
         } catch (NullPointerException e) {
             return "null";

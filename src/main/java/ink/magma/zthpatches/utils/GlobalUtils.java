@@ -1,7 +1,7 @@
 package ink.magma.zthpatches.utils;
 
-import ink.magma.zthpatches.bukkit.ZthPatches;
-import ink.magma.zthpatches.bukkit.settings.GlobalSettings;
+import ink.magma.zthpatches.states.settings.GlobalSettingInitializer;
+import ink.magma.zthpatches.states.settings.GlobalSettings;
 
 import java.util.Date;
 
@@ -35,6 +35,6 @@ public class GlobalUtils {
     }
 
     public static GlobalSettings getGlobalSettings() {
-        return ZthPatches.getGlobalSettings();
+        return GlobalSettingInitializer.getGlobalSettings();
     }
 }

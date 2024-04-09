@@ -1,7 +1,7 @@
-package ink.magma.zthpatches.bukkit.settings;
+package ink.magma.zthpatches.states.settings;
 
 import ink.magma.zthpatches.PlatformHandler;
-import ink.magma.zthpatches.bukkit.ZthPatches;
+import ink.magma.zthpatches.bukkit.ZthPatchesBukkit;
 import ink.magma.zthpatches.bungee.ZthPatchesBungee;
 import net.william278.annotaml.Annotaml;
 import org.jetbrains.annotations.NotNull;
@@ -39,7 +39,7 @@ public class GlobalSettingInitializer {
     @NotNull
     private static File getConfigFile() {
         if (PlatformHandler.getPlatformType().equals(PlatformHandler.PlatformType.Bukkit)) {
-            return new File(ZthPatches.getInstance().getDataFolder(), "config.yml");
+            return new File(ZthPatchesBukkit.getInstance().getDataFolder(), "config.yml");
         }
         if (PlatformHandler.getPlatformType().equals(PlatformHandler.PlatformType.Bungee)) {
             return new File(ZthPatchesBungee.getInstance().getDataFolder(), "config.yml");

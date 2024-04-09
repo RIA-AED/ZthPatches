@@ -1,7 +1,8 @@
 package ink.magma.zthpatches.bukkit.patches.DragonEggAddon;
 
-import ink.magma.zthpatches.bukkit.ZthPatches;
-import ink.magma.zthpatches.bukkit.patches.PatchAddon;
+import ink.magma.zthpatches.bukkit.ZthPatchesBukkit;
+import ink.magma.zthpatches.PatchAddon;
+import ink.magma.zthpatches.states.settings.GlobalSettingInitializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
 public class DragonEggAddon extends PatchAddon implements Listener {
     @Override
     public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(this, ZthPatches.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, ZthPatchesBukkit.getInstance());
     }
 
     @Override
@@ -30,7 +31,7 @@ public class DragonEggAddon extends PatchAddon implements Listener {
 
     @EventHandler
     public void onPlayerEggPickUp(EntityPickupItemEvent event) {
-        if (!ZthPatches.getGlobalSettings().dragonEggEndWorldPickUpMessage) return;
+        if (!GlobalSettingInitializer.getGlobalSettings().dragonEggEndWorldPickUpMessage) return;
         if (event.getEntity().getWorld().getEnvironment() != World.Environment.THE_END) return;
 
         ItemStack pickupItem = event.getItem().getItemStack();
@@ -45,7 +46,7 @@ public class DragonEggAddon extends PatchAddon implements Listener {
 
     @EventHandler
     public void onEggFallVoid(EntitySpawnEvent event) {
-        if (!ZthPatches.getGlobalSettings().dragonEggFallVoidAlert) return;
+        if (!GlobalSettingInitializer.getGlobalSettings().dragonEggFallVoidAlert) return;
         if (event.getLocation().getWorld().getEnvironment() != World.Environment.THE_END) return;
         if (event.getEntityType() != EntityType.FALLING_BLOCK) return;
 

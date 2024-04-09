@@ -1,4 +1,4 @@
-name: ZthPatchesBungee
+name: ZthPatches
 main: ink.magma.zthpatches.bungee.ZthPatchesBungee
 version: '${version}'
 author: MagmaBlock

@@ -1,7 +1,8 @@
 package ink.magma.zthpatches.bukkit.patches.ComposterMoreRecipe;
 
-import ink.magma.zthpatches.bukkit.ZthPatches;
-import ink.magma.zthpatches.bukkit.patches.PatchAddon;
+import ink.magma.zthpatches.PatchAddon;
+import ink.magma.zthpatches.bukkit.ZthPatchesBukkit;
+import ink.magma.zthpatches.states.settings.GlobalSettingInitializer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
@@ -21,7 +22,7 @@ public class ComposterMoreRecipe extends PatchAddon implements Listener {
 
     @Override
     public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(this, ZthPatches.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, ZthPatchesBukkit.getInstance());
     }
 
     @Override
@@ -33,7 +34,7 @@ public class ComposterMoreRecipe extends PatchAddon implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (!ZthPatches.getGlobalSettings().composterMoreRecipe ||
+        if (!GlobalSettingInitializer.getGlobalSettings().composterMoreRecipe ||
             event.getClickedBlock() == null ||
             event.getItem() == null ||
             event.getHand() != EquipmentSlot.HAND ||
@@ -60,7 +61,7 @@ public class ComposterMoreRecipe extends PatchAddon implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onHopperPutItem(InventoryMoveItemEvent event) {
-        if (!ZthPatches.getGlobalSettings().composterMoreRecipe) return;
+        if (!GlobalSettingInitializer.getGlobalSettings().composterMoreRecipe) return;
         // 判断目标是否是堆肥桶
         if (!event.getDestination().getType().equals(InventoryType.COMPOSTER)) return;
         ItemStack item = event.getItem();

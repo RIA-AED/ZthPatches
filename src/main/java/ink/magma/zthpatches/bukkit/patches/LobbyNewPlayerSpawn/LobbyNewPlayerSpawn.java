@@ -1,7 +1,7 @@
 package ink.magma.zthpatches.bukkit.patches.LobbyNewPlayerSpawn;
 
-import ink.magma.zthpatches.bukkit.ZthPatches;
-import ink.magma.zthpatches.bukkit.patches.PatchAddon;
+import ink.magma.zthpatches.bukkit.ZthPatchesBukkit;
+import ink.magma.zthpatches.PatchAddon;
 import ink.magma.zthpatches.utils.GlobalUtils;
 import net.william278.huskhomes.api.HuskHomesAPI;
 import net.william278.huskhomes.position.Warp;
@@ -28,7 +28,7 @@ public class LobbyNewPlayerSpawn extends PatchAddon implements Listener {
         if (!GlobalUtils.checkInServer("lobby")) return;
         instance = this;
 
-        Bukkit.getPluginManager().registerEvents(this, ZthPatches.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, ZthPatchesBukkit.getInstance());
 
         huskHomesAPI = HuskHomesAPI.getInstance();
     }

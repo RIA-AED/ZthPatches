@@ -1,14 +1,11 @@
 package ink.magma.zthpatches.command.InGameEditor;
 
-import ink.magma.zthpatches.bukkit.ZthPatches;
-import ink.magma.zthpatches.bukkit.settings.GlobalSettingInitializer;
-import ink.magma.zthpatches.bukkit.settings.GlobalSettings;
-import ink.magma.zthpatches.bukkit.settings.GlobalSettingsController;
-import org.bukkit.command.CommandSender;
+import ink.magma.zthpatches.states.settings.GlobalSettingInitializer;
+import ink.magma.zthpatches.states.settings.GlobalSettings;
+import ink.magma.zthpatches.states.settings.GlobalSettingsController;
+import ink.magma.zthpatches.utils.MessageUtils;
 import revxrsal.commands.CommandHandler;
-import revxrsal.commands.annotation.*;
-import revxrsal.commands.bukkit.BukkitCommandHandler;
-import revxrsal.commands.bukkit.annotation.CommandPermission;
+import revxrsal.commands.command.CommandActor;
 
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
@@ -25,12 +22,77 @@ import java.util.Set;
  */
 public class InGameEditor {
 
+    public void command(CommandActor sender, String settingKey, String settingValue) {
+        // Get
+        if (settingValue == null) {
+            try {
+                String fieldValueString = GlobalSettingsController.getFieldValueString(getSettings().getClass(), settingKey);
+                MessageUtils.sendMiniMessage(sender, MessageFormat.format(
+                        "<gray>配置项 <white>{0} <gray>的值为 <white>{1} <gray>.",
+                        settingKey, fieldValueString
+                ));
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                MessageUtils.sendMiniMessage(sender, "<gray>配置项不存在.");
+            } catch (NullPointerException e) {
+                MessageUtils.sendMiniMessage(sender, MessageFormat.format(
+                        "<gray>配置项 <white>{0} <gray>的值为 <white>{1} <gary>.",
+                        settingKey, "<i>未配置</i>"
+                ));
+            }
+        }
+        // Set
+        else {
+            try {
+                GlobalSettingsController.setModifiableFieldsByString(getSettings(), settingKey, settingValue);
+                saveConfig();
+                MessageUtils.sendMiniMessage(sender, MessageFormat.format(
+                        "<gray>配置项 <white>{0} <gray>已修改为 <white>{1} <gray>.",
+                        settingKey, settingValue
+                ));
+            } catch (GlobalSettingsController.NoSupportTypeException e) {
+                MessageUtils.sendMiniMessage(
+                        sender, "<gray>很抱歉，此类型的配置暂无法在游戏内更改，请前往服务端配置文件修改."
+                );
+            } catch (NoSuchFieldException e) {
+                MessageUtils.sendMiniMessage(
+                        sender,
+                        MessageFormat.format("<gray>找不到 <white>{0} <gray>配置项.", settingKey)
+                );
+            } catch (IllegalAccessException e) {
+                MessageUtils.sendMiniMessage(
+                        sender,
+                        "<red>很抱歉，由于可能的程序 BUG，修改此配置项被拒绝. (IllegalAccessException)"
+                );
+            } catch (IllegalArgumentException e) {
+                String typeName;
+                try {
+                    typeName = GlobalSettings.class.getField(settingKey).getType().getSimpleName();
+                } catch (NoSuchFieldException ignore) {
+                    typeName = "未知类型";
+                }
+                MessageUtils.sendMiniMessage(
+                        sender,
+                        MessageFormat.format(
+                                "<gray>无法解析输入 <white>\"{0}\"<gray>, 需要的类型: <white>{1} <gray>.",
+                                settingValue, typeName
+                        )
+                );
+            } catch (IllegalStateException e) {
+                MessageUtils.sendMiniMessage(
+                        sender,
+                        "<red>已更改此配置，但无法保存新的配置文件到硬盘. 本次的配置在重启后可能失效！"
+                );
+            }
+        }
+    }
+
     public void registerAutoCompleter(CommandHandler handler) {
         // 自动补全相关
         // 设置键的补全
-        handler.getAutoCompleter().registerSuggestion("inGameGlobalSettingKey", (args, sender, command) -> {
-            return GlobalSettingsController.getModifiableFieldNames(getSettings().getClass());
-        });
+        handler.getAutoCompleter().registerSuggestion(
+                "inGameGlobalSettingKey",
+                (args, sender, command) -> GlobalSettingsController.getModifiableFieldNames(getSettings().getClass())
+        );
         // 设置值的补全
         handler.getAutoCompleter().registerSuggestion("inGameGlobalSettingValue", (args, sender, command) -> {
             try {
@@ -55,71 +117,8 @@ public class InGameEditor {
         });
     }
 
-    @Command("zth-patches-setting")
-    @CommandPermission("zth-patches.setting")
-    @Description("可以实现游戏内对 ZthPatches 设置的更改。")
-    @AutoComplete("@inGameGlobalSettingKey @inGameGlobalSettingValue")
-    public void getSettingValue(CommandSender sender,
-                                @Named("配置项") String settingKey,
-                                @Optional @Named("配置项值") String settingValue) {
-        // Get
-        if (settingValue == null) {
-            try {
-                String fieldValueString = GlobalSettingsController.getFieldValueString(getSettings().getClass(), settingKey);
-                sender.sendMessage(MessageFormat.format(
-                        "配置项 {0} 的值为 {1}",
-                        settingKey, fieldValueString
-                ));
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                sender.sendMessage("配置项不存在");
-            } catch (NullPointerException e) {
-                sender.sendMessage(MessageFormat.format(
-                        "配置项 {0} 的值为 {1}",
-                        settingKey, "未配置"
-                ));
-            }
-        }
-        // Set
-        else {
-            try {
-                GlobalSettingsController.setModifiableFieldsByString(getSettings(), settingKey, settingValue);
-                saveConfig();
-                sender.sendMessage(MessageFormat.format(
-                        "配置项 {0} 已修改为 {1}",
-                        settingKey, settingValue
-                ));
-            } catch (GlobalSettingsController.NoSupportTypeException e) {
-                sender.sendMessage("很抱歉，此类型的配置暂无法在游戏内更改，请前往服务端配置文件修改。");
-                return;
-            } catch (NoSuchFieldException e) {
-                sender.sendMessage(MessageFormat.format("找不到 {0} 配置项.", settingKey));
-                return;
-            } catch (IllegalAccessException e) {
-                sender.sendMessage("很抱歉，由于可能的程序 BUG，修改此配置项被拒绝。 (IllegalAccessException)");
-                return;
-            } catch (IllegalArgumentException e) {
-                String typeName;
-                try {
-                    typeName = GlobalSettings.class.getField(settingKey).getType().getSimpleName();
-                } catch (NoSuchFieldException ignore) {
-                    typeName = "未知类型";
-                }
-                sender.sendMessage(MessageFormat.format(
-                        "无法解析输入 \"{0}\", 需要的类型: {1}",
-                        settingValue, typeName
-                ));
-            } catch (IllegalStateException e) {
-                sender.sendMessage("已更改此配置，但无法保存新的配置文件到硬盘。本次的配置在重启后可能失效！");
-            }
-        }
-    }
-
-    private BukkitCommandHandler getCommandHandler() {
-        return ZthPatches.getInstance().handler;
-    }
-
     private GlobalSettings getSettings() {
-        return ZthPatches.getGlobalSettings();
+        return GlobalSettingInitializer.getGlobalSettings();
     }
 
     private void saveConfig() {
