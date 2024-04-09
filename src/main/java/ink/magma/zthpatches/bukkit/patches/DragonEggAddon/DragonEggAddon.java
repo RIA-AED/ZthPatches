@@ -1,7 +1,7 @@
 package ink.magma.zthpatches.bukkit.patches.DragonEggAddon;
 
-import ink.magma.zthpatches.bukkit.ZthPatchesBukkit;
 import ink.magma.zthpatches.PatchAddon;
+import ink.magma.zthpatches.bukkit.ZthPatchesBukkit;
 import ink.magma.zthpatches.states.settings.GlobalSettingInitializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -46,9 +46,13 @@ public class DragonEggAddon extends PatchAddon implements Listener {
 
     @EventHandler
     public void onEggFallVoid(EntitySpawnEvent event) {
-        if (!GlobalSettingInitializer.getGlobalSettings().dragonEggFallVoidAlert) return;
-        if (event.getLocation().getWorld().getEnvironment() != World.Environment.THE_END) return;
-        if (event.getEntityType() != EntityType.FALLING_BLOCK) return;
+        if (!GlobalSettingInitializer.getGlobalSettings().dragonEggFallVoidAlert ||
+            event.getLocation().getWorld() == null ||
+            event.getLocation().getWorld().getEnvironment() != World.Environment.THE_END ||
+            event.getEntityType() != EntityType.FALLING_BLOCK
+        ) {
+            return;
+        }
 
         FallingBlock fallingBlock = (FallingBlock) event.getEntity();
         if (fallingBlock.getBlockData().getMaterial() == Material.DRAGON_EGG) {

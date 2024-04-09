@@ -4,7 +4,6 @@ import revxrsal.commands.CommandHandler;
 import revxrsal.commands.annotation.*;
 import revxrsal.commands.bungee.BungeeCommandActor;
 import revxrsal.commands.bungee.annotation.CommandPermission;
-import revxrsal.commands.command.CommandActor;
 
 public class InGameEditorBungee {
     private final InGameEditor real;

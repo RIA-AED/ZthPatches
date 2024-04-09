@@ -4,7 +4,6 @@ import revxrsal.commands.CommandHandler;
 import revxrsal.commands.annotation.*;
 import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
-import revxrsal.commands.command.CommandActor;
 
 public class InGameEditorBukkit {
     private final InGameEditor real;

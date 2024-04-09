@@ -1,7 +1,7 @@
 package ink.magma.zthpatches.bukkit.patches.LobbyNewPlayerSpawn;
 
-import ink.magma.zthpatches.bukkit.ZthPatchesBukkit;
 import ink.magma.zthpatches.PatchAddon;
+import ink.magma.zthpatches.bukkit.ZthPatchesBukkit;
 import ink.magma.zthpatches.utils.GlobalUtils;
 import net.william278.huskhomes.api.HuskHomesAPI;
 import net.william278.huskhomes.position.Warp;
@@ -39,15 +39,13 @@ public class LobbyNewPlayerSpawn extends PatchAddon implements Listener {
             getWarp = huskHomesAPI.getWarp(GlobalUtils.getGlobalSettings().lobbyNewPlayerSpawnWarpName);
 
             // 进行相应目标的传送
-            getWarp.thenAccept((result) -> {
-                result.ifPresent(warp -> {
-                    OnlineUser onlineUser = huskHomesAPI.adaptUser(player);
-                    huskHomesAPI.teleportBuilder(onlineUser)
-                            .target(result.get())
-                            .toTimedTeleport()
-                            .execute();
-                });
-            });
+            getWarp.thenAccept((result) -> result.ifPresent(warp -> {
+                OnlineUser onlineUser = huskHomesAPI.adaptUser(player);
+                huskHomesAPI.teleportBuilder(onlineUser)
+                        .target(result.get())
+                        .toTimedTeleport()
+                        .execute();
+            }));
 
             player.setFlying(false);
             return true;
