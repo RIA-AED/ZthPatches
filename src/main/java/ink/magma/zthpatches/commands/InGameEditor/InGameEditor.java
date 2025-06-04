@@ -1,4 +1,4 @@
-package ink.magma.zthpatches.command.InGameEditor;
+package ink.magma.zthpatches.commands.InGameEditor;
 
 import ink.magma.zthpatches.states.settings.GlobalSettingInitializer;
 import ink.magma.zthpatches.states.settings.GlobalSettings;

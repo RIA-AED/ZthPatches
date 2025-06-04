@@ -1,4 +1,4 @@
-package ink.magma.zthpatches.command.Main;
+package ink.magma.zthpatches.commands.Main;
 
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Subcommand;

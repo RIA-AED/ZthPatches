@@ -1,4 +1,4 @@
-package ink.magma.zthpatches.command.InGameEditor;
+package ink.magma.zthpatches.commands.InGameEditor;
 
 import revxrsal.commands.CommandHandler;
 import revxrsal.commands.annotation.*;

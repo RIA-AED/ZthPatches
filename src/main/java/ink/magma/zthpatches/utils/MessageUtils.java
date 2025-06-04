@@ -9,10 +9,13 @@ import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.command.CommandActor;
 
 public class MessageUtils {
+    public static final @NotNull MiniMessage mini = MiniMessage.miniMessage();
+
     public static void sendMessage(CommandActor actor, ComponentLike message) {
         sendMessage(getAudience(actor), message);
     }
@@ -34,7 +37,7 @@ public class MessageUtils {
     }
 
     public static void sendMiniMessage(Audience audience, String message) {
-        Component deserialize = MiniMessage.miniMessage().deserialize(message);
+        Component deserialize = mini.deserialize(message);
         audience.sendMessage(deserialize);
     }
 

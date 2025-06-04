@@ -2,8 +2,8 @@ package ink.magma.zthpatches.bungee;
 
 import ink.magma.zthpatches.PlatformHandler;
 import ink.magma.zthpatches.bungee.patches.Test.Test;
-import ink.magma.zthpatches.command.InGameEditor.InGameEditorBungee;
-import ink.magma.zthpatches.command.Main.MainBungee;
+import ink.magma.zthpatches.commands.InGameEditor.InGameEditorBungee;
+import ink.magma.zthpatches.commands.Main.MainBungee;
 import ink.magma.zthpatches.states.settings.GlobalSettingInitializer;
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.md_5.bungee.api.plugin.Plugin;

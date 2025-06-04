@@ -1,4 +1,4 @@
-package ink.magma.zthpatches.command.Main;
+package ink.magma.zthpatches.commands.Main;
 
 import ink.magma.zthpatches.states.settings.GlobalSettingInitializer;
 import ink.magma.zthpatches.utils.MessageUtils;

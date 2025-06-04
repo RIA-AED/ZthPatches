@@ -4,9 +4,10 @@ import ink.magma.zthpatches.PlatformHandler;
 import ink.magma.zthpatches.bukkit.patches.ComposterMoreRecipe.ComposterMoreRecipe;
 import ink.magma.zthpatches.bukkit.patches.DragonEggAddon.DragonEggAddon;
 import ink.magma.zthpatches.bukkit.patches.LobbyNewPlayerSpawn.LobbyNewPlayerSpawn;
+import ink.magma.zthpatches.bukkit.patches.MyMenu.MyMenu;
 import ink.magma.zthpatches.bukkit.patches.RiaSetFreezeCommand.RiaSetFreezeCommand;
-import ink.magma.zthpatches.command.InGameEditor.InGameEditorBukkit;
-import ink.magma.zthpatches.command.Main.MainBukkit;
+import ink.magma.zthpatches.commands.InGameEditor.InGameEditorBukkit;
+import ink.magma.zthpatches.commands.Main.MainBukkit;
 import ink.magma.zthpatches.states.settings.GlobalSettingInitializer;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,6 +46,7 @@ public final class ZthPatchesBukkit extends JavaPlugin {
         new ComposterMoreRecipe().onEnable();
         new RiaSetFreezeCommand().onEnable();
         new LobbyNewPlayerSpawn().onEnable();
+        new MyMenu().onEnable();
     }
 
     @Override
