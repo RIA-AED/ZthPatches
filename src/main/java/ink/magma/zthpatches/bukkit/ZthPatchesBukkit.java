@@ -2,7 +2,6 @@ package ink.magma.zthpatches.bukkit;
 
 import ink.magma.zthpatches.PlatformHandler;
 import ink.magma.zthpatches.bukkit.patches.ComposterMoreRecipe.ComposterMoreRecipe;
-import ink.magma.zthpatches.bukkit.patches.DragonEggAddon.DragonEggAddon;
 import ink.magma.zthpatches.bukkit.patches.LobbyNewPlayerSpawn.LobbyNewPlayerSpawn;
 import ink.magma.zthpatches.bukkit.patches.RiaSetFreezeCommand.RiaSetFreezeCommand;
 import ink.magma.zthpatches.command.InGameEditor.InGameEditorBukkit;
