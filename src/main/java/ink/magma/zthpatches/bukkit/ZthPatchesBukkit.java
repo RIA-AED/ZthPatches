@@ -41,7 +41,7 @@ public final class ZthPatchesBukkit extends JavaPlugin {
         handler.enableAdventure(adventure);
 
         // patches
-        new DragonEggAddon().onEnable();
+//        new DragonEggAddon().onEnable();
         new ComposterMoreRecipe().onEnable();
         new RiaSetFreezeCommand().onEnable();
         new LobbyNewPlayerSpawn().onEnable();
